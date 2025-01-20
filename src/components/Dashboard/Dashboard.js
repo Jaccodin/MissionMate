@@ -1,32 +1,45 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Auth/AuthProvider';
 import GoalList from '../Goals/GoalList';
 import GoalForm from '../Goals/GoalForm';
-import { useAuth } from '../Auth/AuthProvider';
 
 export default function Dashboard() {
+    const navigate = useNavigate();
     const { user, signOut } = useAuth();
+
+    const handleSignOut = async () => {
+        try {
+            await signOut();
+            navigate('/login');
+        } catch (error) {
+            console.error('Error signing out:', error.message);
+        }
+    };
 
     return (
         <div className="dashboard">
             <header className="dashboard-header">
-                <h1>MissionMate Dashboard</h1>
-                <div className="user-info">
-                    <span>Welcome, {user.email}</span>
-                    <button onClick={signOut} className="logout-button">
-                        Sign Out
-                    </button>
+                <div className="header-content">
+                    <h1>MissionMate</h1>
+                    <div className="user-menu">
+                        <span className="user-email">{user?.email}</span>
+                        <button onClick={handleSignOut} className="sign-out">
+                            Sign Out
+                        </button>
+                    </div>
                 </div>
             </header>
 
-            <div className="dashboard-content">
-                <div className="goals-section">
+            <main className="dashboard-content">
+                <div className="goals-container">
+                    <div className="goals-header">
+                        <h2>Your Goals</h2>
+                        <GoalForm />
+                    </div>
                     <GoalList />
                 </div>
-                
-                <div className="form-section">
-                    <GoalForm />
-                </div>
-            </div>
+            </main>
         </div>
     );
 }

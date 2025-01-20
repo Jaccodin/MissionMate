@@ -6,8 +6,10 @@ import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import ResetPassword from './components/Auth/ResetPassword';
 import UpdatePassword from './components/Auth/UpdatePassword';
+import VerifyEmail from './components/Auth/VerifyEmail';
 import './styles/main.css';
 import './styles/auth.css';
+import './styles/dashboard.css';
 
 // Protected Route wrapper
 const ProtectedRoute = ({ children }) => {
@@ -27,6 +29,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/update-password" element={<UpdatePassword />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
           <Route
             path="/"
             element={
