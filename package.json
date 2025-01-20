@@ -1,6 +1,7 @@
 {
   "name": "missionmate",
   "version": "1.0.0",
+  "homepage": "https://jaccodin.github.io/MissionMate",
   "description": "A goal tracking and mission management application",
   "main": "index.js",
   "scripts": {
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
+    "gh-pages": "^6.3.0",
     "supertest": "^6.3.3"
   },
   "eslintConfig": {
