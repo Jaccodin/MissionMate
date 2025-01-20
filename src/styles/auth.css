@@ -99,3 +99,92 @@ button:disabled {
 .auth-footer a:hover {
     text-decoration: underline;
 }
+
+/* Social Authentication */
+.social-auth {
+    margin-top: 20px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+}
+
+.divider span {
+    padding: 0 10px;
+    color: #666;
+    font-size: 14px;
+}
+
+.social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.social-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.social-button:hover {
+    background: #f5f5f5;
+}
+
+.social-button.github:hover {
+    background: #24292e;
+    color: white;
+    border-color: #24292e;
+}
+
+.social-button.google:hover {
+    background: #4285f4;
+    color: white;
+    border-color: #4285f4;
+}
+
+.social-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Password Reset */
+.forgot-password {
+    float: right;
+    font-size: 14px;
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.success-message {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+}

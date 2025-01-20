@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from './AuthProvider';
-import SocialAuth from './SocialAuth';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '../../lib/supabase';
 
-export default function Login() {
+export default function UpdatePassword() {
     const navigate = useNavigate();
-    const { signIn } = useAuth();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [formData, setFormData] = useState({
-        email: '',
-        password: ''
+        password: '',
+        confirmPassword: ''
     });
 
     const handleChange = (e) => {
@@ -25,14 +23,20 @@ export default function Login() {
         setLoading(true);
         setError(null);
 
+        if (formData.password !== formData.confirmPassword) {
+            setError("Passwords don't match");
+            setLoading(false);
+            return;
+        }
+
         try {
-            const { error } = await signIn({
-                email: formData.email,
-                password: formData.password,
+            const { error } = await supabase.auth.updateUser({
+                password: formData.password
             });
 
             if (error) throw error;
-            navigate('/');
+            
+            navigate('/login');
         } catch (error) {
             setError(error.message);
         } finally {
@@ -43,8 +47,8 @@ export default function Login() {
     return (
         <div className="auth-container">
             <div className="auth-box">
-                <h2>Welcome Back</h2>
-                <p>Sign in to continue to MissionMate</p>
+                <h2>Update Password</h2>
+                <p>Enter your new password</p>
 
                 {error && (
                     <div className="error-message">
@@ -54,24 +58,7 @@ export default function Login() {
 
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="password">
-                            Password
-                            <Link to="/reset-password" className="forgot-password">
-                                Forgot Password?
-                            </Link>
-                        </label>
+                        <label htmlFor="password">New Password</label>
                         <input
                             type="password"
                             id="password"
@@ -79,20 +66,27 @@ export default function Login() {
                             value={formData.password}
                             onChange={handleChange}
                             required
+                            minLength={6}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="confirmPassword">Confirm New Password</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            required
+                            minLength={6}
                         />
                     </div>
 
                     <button type="submit" disabled={loading}>
-                        {loading ? 'Signing in...' : 'Sign In'}
+                        {loading ? 'Updating...' : 'Update Password'}
                     </button>
                 </form>
-
-                <SocialAuth />
-
-                <p className="auth-footer">
-                    Don't have an account?{' '}
-                    <Link to="/register">Sign up</Link>
-                </p>
             </div>
         </div>
     );
